@@ -1,0 +1,44 @@
+extends layout
+
+block content
+ .jumbotron
+    h1= titulo
+    p=mensagem
+
+  .row
+    .col-xs-12.col-md-4
+      form(action="", method="post", role="form")
+        .form-group
+          label(for="nome") Nome:
+          input#nome.form-control(name="nome", required="true")
+        .form-group
+          label(for="nome") Endereço:
+          textarea#nome.form-control(name="endereco", required="true")
+        button.btn.btn-primary Salvar
+  
+  -if (contatos && contatos.length > 0)
+    .row
+      .col-md-6
+        table.table.table-striped
+          thead
+            tr
+              th.text-center Contato
+              th.text-center Ações
+          tbody
+            each contato in contatos
+              tr
+                td.text-center=contato.nome
+                td.text-center
+                  a.btn(href="#")
+                    span.glyphicon.glyphicon-edit
+                  button.btn.btn-link.glyphicon.glyphicon-trash(onclick="confirmaRemocao('" + contato.nome + "', '"+ contato._id + "')")
+      
+  script.
+    var confirmaRemocao = function(contato, id) {
+      if(confirm("Deseja realmente remover o contato '" + contato + "'?")) {
+        window.location.href = '/contato/' + id;
+      }
+    };
+
+
+
